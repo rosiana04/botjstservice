@@ -1,0 +1,290 @@
+
+<% include ./header %>
+	 	
+	<main class="flex-shrink-0">
+		<div class="container">
+
+			<div class="row row-cols-1 row-cols-md-3 mb-3 text-center" style="margin-top: 30px;">
+				<div class="col">
+					<div class="card mb-4 shadow-sm">
+					<div class="card-header">
+						<h5 class="my-0 fw-normal" id='t1'>-</h5>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title pricing-card-title">Open / <small class="text-muted"> High </small></h4>
+						<h5 class="card-title pricing-card-title">( 
+							<span id="tmo_o">0.0000</span> / 
+							<small class="text-muted">
+								<span  id="tmo_h">0.0000</span> )
+							</small>
+						</h5>
+						<h4 class="card-title pricing-card-title">Close / <small class="text-muted"> Low </small></h4>
+						<h5 class="card-title pricing-card-title">( 
+							<span id="tmo_c">0.0000</span> / 
+							<small class="text-muted">
+								<span  id="tmo_l">0.0000</span> )
+							</small>
+						</h5>
+					</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card mb-4 shadow-sm">
+					<div class="card-header">
+						<h5 class="my-0 fw-normal" id='t2'>-</h5>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title pricing-card-title">Open / <small class="text-muted"> High </small></h4>
+						<h5 class="card-title pricing-card-title">( 
+							<span id="tnow_o">0.0000</span> / 
+							<small class="text-muted">
+								<span  id="tnow_h">0.0000</span> )
+							</small>
+						</h5>
+						<h4 class="card-title pricing-card-title">Close / <small class="text-muted"> Low </small></h4>
+						<h5 class="card-title pricing-card-title">( 
+							<span id="tnow_c">0.0000</span> / 
+							<small class="text-muted">
+								<span  id="tnow_l">0.0000</span> )
+							</small>
+						</h5>
+					</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card mb-4 shadow-sm">
+					<div class="card-header">
+						<h5 class="my-0 fw-normal" id='t3'>-</h5>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title pricing-card-title">Open / <small class="text-muted"> High </small></h4>
+						<h5 class="card-title pricing-card-title">( 
+							<span id="tpo_o">0.0000</span> / 
+							<small class="text-muted">
+								<span  id="tpo_h">0.0000</span> )
+							</small>
+						</h5>
+						<h4 class="card-title pricing-card-title">Close / <small class="text-muted"> Low </small></h4>
+						<h5 class="card-title pricing-card-title">( 
+							<span id="tpo_c">0.0000</span> / 
+							<small class="text-muted">
+								<span  id="tpo_l">0.0000</span> )
+							</small>
+						</h5>
+					</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="margin-top: 30px;">
+				<div class="col-md-5">
+				  <div style="width:100%; height: 50%;">
+					  <canvas id="linechart"></canvas>
+				  </div>
+				</div>
+				<div class="col-md-7">
+					<div style="width:100%; height: 50%;">
+						<canvas id="chart"></canvas>
+					</div>
+				  </div>
+			  </div>
+			
+			<!-- <div class="row" style="margin-top: 30px;">
+			  <div class="col-md">
+				<div style="width:100%; height: 50%;">
+					<canvas id="chart"></canvas>
+				</div>
+			  </div>
+			</div> -->
+
+
+			<div class="row" style="margin-top: 30px;">
+				<div class="col-md-12">
+					<div class="col-4">
+						<label for="firstName" class="form-label">Filters</label>
+						<input type="number" class="form-control" id="filters" placeholder="" value="" required="">
+					</div>
+					<!-- <div class="col-4" style="margin-top: 10px;">
+						<button class="w-100 btn btn-outline-primary" type="button" id="btn_search">Search</button>
+					</div> -->
+				</div>
+			</div>
+			<div class="row" style="margin-top: 15px;">			
+				
+				<div class="col-md-12" style="width: 100%;">
+					<div class="table-responsive">
+						<table class="table table-striped table-sm table-hover" id = "hist_table">
+						  <thead>
+							<tr>
+							  <th>Timestamp</th>
+							  <th>Open</th>
+							  <th>High</th>
+							  <th>Close</th>
+							  <th>Low</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							  
+						  </tbody>
+						</table>
+					  </div>
+				</div>
+			</div>
+
+
+		  </div>
+	</main>
+
+
+	<script type='text/javascript' src="/javascripts/Chart.min.js"></script>
+	<script type='text/javascript' src="/javascripts/jquery-1.11.0.min.js"></script>
+	
+	<script type='text/javascript' src="/javascripts/luxon@1.24.1"></script>
+	<script type='text/javascript' src="/javascripts/chart.js"></script>
+	<script type='text/javascript'type='text/javascript' src="/javascripts/chartjs-adapter-luxon@0.2.1"></script>
+
+	<script type='text/javascript' src="/javascripts/chartjs-chart-financial.js"></script>
+
+	<script>
+		// https://www.mql5.com/en/trading
+		// http://localhost:3000/api/prediction/y/2020/06/22/07/28
+
+		const path = window.location.pathname;
+		const st = path.split('/')[4];
+		const path_date = `${path.split('/')[5]}/${path.split('/')[6]}/${path.split('/')[7]}/${path.split('/')[8]}/${path.split('/')[9]}`;
+
+		
+		var ctx = document.getElementById('chart').getContext('2d');
+		ctx.canvas.width = 1000;
+		ctx.canvas.height = 400;
+
+		ftrade();
+
+		async function ftrade(){
+			var trade_data = [];
+			var dlabel = [];
+			var olbl = [];
+			var clbl = [];
+
+			var ct = '';
+			$.get(`/api/prediction/n/${st}/${path_date}`).done(function(dt){
+				$.each(dt, function(i, val){
+					trade_data.push({
+						't': val.date,//luxon.DateTime.fromRFC2822(val.date).ts,
+						'c': val.trade_data[0].toString(),
+						'h': val.trade_data[1].toString(),
+						'l': val.trade_data[2].toString(),
+						'o': val.trade_data[3].toString()
+					});						
+
+					ct = ct + `
+						<tr>
+							<td>${val.date}</td>
+							<td>${val.trade_data[3].toFixed(8)}</td>
+							<td>${val.trade_data[2].toFixed(8)}</td>
+							<td>${val.trade_data[0].toFixed(8)}</td>
+							<td>${val.trade_data[2].toFixed(8)}</td>
+						</tr>
+					`;
+
+					dlabel.push(i);
+					olbl.push(val.trade_data[3].toString());
+					clbl.push(val.trade_data[0].toString());
+					
+					if((i+1)==dt.length){
+						var chart = new Chart(ctx, {
+							type: 'candlestick',
+							data: {
+								datasets: [{
+									label: 'DNN TRADE',
+									data: trade_data
+								}]
+							}
+						});
+
+						$("#hist_table tbody").empty();
+						$("#hist_table tbody").append(ct);		
+						
+						var config = {
+							type: 'line',
+							data: {
+								labels: dlabel,
+								datasets: [{
+									label: 'Open',
+									backgroundColor: 'red',
+									borderColor: 'red',
+									fill: false,
+									data: olbl,
+								}, {
+									label: 'Close',
+									backgroundColor: 'blue',
+									borderColor: 'blue',
+									fill: false,
+									data: clbl,
+								}]
+							},
+							options: {
+								responsive: true,
+								title: {
+									display: true,
+									text: 'Chart.js Line Chart - Logarithmic'
+								},
+								scales: {
+									xAxes: [{
+										display: true,
+									}],
+									yAxes: [{
+										display: true,
+										type: 'logarithmic',
+									}]
+								}
+							}
+						};
+						var myLineChart = new Chart(
+							document.getElementById('linechart').getContext('2d'),
+							config
+						);
+					}
+					if(i == 10){
+						$('#tnow_o').text(val.trade_data[3].toFixed(8).toString());
+						$('#tnow_h').text(val.trade_data[1].toFixed(8).toString());
+						$('#tnow_c').text(val.trade_data[0].toFixed(8).toString());
+						$('#tnow_l').text(val.trade_data[2].toFixed(8).toString());
+					}else if(i == 9){
+						$('#tmo_o').text(val.trade_data[3].toFixed(8).toString());
+						$('#tmo_h').text(val.trade_data[1].toFixed(8).toString());
+						$('#tmo_c').text(val.trade_data[0].toFixed(8).toString());
+						$('#tmo_l').text(val.trade_data[2].toFixed(8).toString());
+					} else if(i == 11){
+						$('#tpo_o').text(val.trade_data[3].toFixed(8).toString());
+						$('#tpo_h').text(val.trade_data[1].toFixed(8).toString());
+						$('#tpo_c').text(val.trade_data[0].toFixed(8).toString());
+						$('#tpo_l').text(val.trade_data[2].toFixed(8).toString());
+					}
+				});
+			});			
+			
+			if(st == 1){
+				$("#t1").text("-1 Minute");
+				$("#t2").text("Now");
+				$("#t3").text("+1 Minute");
+			}if(st == 2){
+				$("#t1").text("-2 Minute");
+				$("#t2").text("-1 Minute");
+				$("#t3").text("Now");
+			}
+		}
+
+		$("#filters").on('keydown', function(){
+			var txt = $("#filters").val();
+			$("#hist_table tr").filter(function () {
+				$(this).toggle($(this).text().toLowerCase().indexOf(txt) > -1);
+			})
+		})
+		
+	
+
+	</script>
+
+
+<% include ./footer %>

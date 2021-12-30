@@ -1,0 +1,29 @@
+{
+  "name": "trade-app",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^2.8.4",
+    "@tensorflow/tfjs-node": "^2.8.4",
+    "@tensorflow/tfjs-node-gpu": "^2.8.4",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-session": "^1.17.1",
+    "heroku-self-ping": "^2.0.1",
+    "http-errors": "~1.6.3",
+    "luxon": "^1.25.0",
+    "moment": "^2.29.1",
+    "morgan": "~1.9.1",
+    "node-pre-gyp": "^0.17.0",
+    "node-telegram-bot-api": "^0.51.0",
+    "nodemon": "^2.0.7",
+    "nodeplotlib": "^0.7.1",
+    "tinyurl": "^1.1.7",
+    "vega": "^5.18.0"
+  }
+}

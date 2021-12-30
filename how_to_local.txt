@@ -1,0 +1,32 @@
+Video ini menjelaskan Implementasi Algoritma Pembelajaran Neural Network (Voltage Prediction) menggunakan Pre-Trained Model dan NodeJS Framework
+This video explains the implementation of the Neural Network Learning Algorithm (Voltage Classification) using Pre-Trained Model dan NodeJS Framework
+
+How To ...
+
+1. download base_framework
+https://tinyurl.com/base-dnnjs
+
+
+2. download and install nodejs
+https://nodejs.org/en/download/
+after install completed:
+>> npm --version
+>> node --version
+>> npm i -g nodemon
+
+
+3. download and install github desktop
+https://desktop.github.com/
+
+4. download IDE => Visual studio / Atom
+https://code.visualstudio.com/download
+
+5. push base project to github, without node_modules
+
+6. creating telebot => BotFather
+
+
+Refs...
+
+Voltage Prediction Training Process https://youtu.be/TeQfJdLHQek
+Voltage Prediction using Flask https://youtu.be/4Cpku4CY60o

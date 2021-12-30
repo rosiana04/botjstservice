@@ -1,0 +1,13 @@
+1. download base-project
+https://tinyurl.com/jst-cls-nodejs
+
+2. Create and Clone GitHub Repo
+
+3. Extract and Commit base_project
+
+4. Create Heroku account
+https://www.heroku.com/
+
+5. Create Heroku project
+
+6. Go to Deploy tab, and connect to your GitHub account
